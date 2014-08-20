@@ -52,8 +52,9 @@ Here's an example of an authentication hash available in the callback by accessi
 ```ruby
 {
     :provider => "wechat",
-    :uid => "123456789",
+    :uid => "unionid",
     :info => {
+      openid: 'openid',
       nickname:   "Nickname",
       sex:        1,
       province:   "Changning",
@@ -75,7 +76,8 @@ Here's an example of an authentication hash available in the callback by accessi
           province:   "Changning",
           city:       "Shanghai",
           country:    "China",
-          headimgurl: "http://image_url"
+          headimgurl: "http://image_url",
+          unionid:    "xxxxxxxxx"
         }
     }
 }
