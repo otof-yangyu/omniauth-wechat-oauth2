@@ -22,7 +22,6 @@ module OmniAuth
 
       info do
         {
-          openid:     raw_info['openid'],
           nickname:   raw_info['nickname'],
           sex:        raw_info['sex'],
           province:   raw_info['province'],

@@ -54,7 +54,6 @@ Here's an example of an authentication hash available in the callback by accessi
     :provider => "wechat",
     :uid => "unionid",
     :info => {
-      openid:     "openid",
       nickname:   "Nickname",
       sex:        1,
       province:   "Changning",
