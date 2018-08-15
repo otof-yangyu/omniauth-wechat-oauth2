@@ -17,11 +17,12 @@ module OmniAuth
       option :token_params, {parse: :json}
 
       uid do
-        raw_info['openid']
+        raw_info['unionid']
       end
 
       info do
         {
+          openid:     raw_info['openid'],
           nickname:   raw_info['nickname'],
           sex:        raw_info['sex'],
           province:   raw_info['province'],
@@ -60,10 +61,10 @@ module OmniAuth
       protected
       def build_access_token
         params = {
-          'appid' => client.id, 
+          'appid' => client.id,
           'secret' => client.secret,
           'code' => request.params['code'],
-          'grant_type' => 'authorization_code' 
+          'grant_type' => 'authorization_code'
           }.merge(token_params.to_hash(symbolize_keys: true))
         client.get_token(params, deep_symbolize(options.auth_token_params))
       end

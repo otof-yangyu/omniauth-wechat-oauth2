@@ -3,7 +3,7 @@ Omniauth-wechat-oauth2
 
 [![Build Status](https://travis-ci.org/skinnyworm/omniauth-wechat-oauth2.svg)](https://travis-ci.org/skinnyworm/omniauth-wechat-oauth2) [![Gem Version](https://badge.fury.io/rb/omniauth-wechat-oauth2.png)](http://badge.fury.io/rb/omniauth-wechat-oauth2)
 
-Wechat OAuth2 Strategy for OmniAuth 1.0. 
+Wechat OAuth2 Strategy for OmniAuth 1.0.
 
 You need to get a wechat API key at: http://mp.weixin.qq.com
 
@@ -52,8 +52,9 @@ Here's an example of an authentication hash available in the callback by accessi
 ```ruby
 {
     :provider => "wechat",
-    :uid => "123456789",
+    :uid => "unionid",
     :info => {
+      openid:     "openid",
       nickname:   "Nickname",
       sex:        1,
       province:   "Changning",
@@ -69,13 +70,14 @@ Here's an example of an authentication hash available in the callback by accessi
     },
     :extra => {
         :raw_info => {
-          openid:     "openid"
+          openid:     "openid",
           nickname:   "Nickname",
           sex:        1,
           province:   "Changning",
           city:       "Shanghai",
           country:    "China",
-          headimgurl: "http://image_url"
+          headimgurl: "http://image_url",
+          unionid:    "unionid"
         }
     }
 }
