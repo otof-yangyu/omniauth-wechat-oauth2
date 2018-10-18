@@ -1,20 +1,17 @@
-require "omniauth-oauth2"
+require 'omniauth-oauth2'
 
 module OmniAuth
   module Strategies
     class Wechat < OmniAuth::Strategies::OAuth2
-      option :name, "wechat"
-
+      option :name, 'wechat'
       option :client_options, {
-        site:          "https://api.weixin.qq.com",
-        authorize_url: "https://open.weixin.qq.com/connect/oauth2/authorize#wechat_redirect",
-        token_url:     "/sns/oauth2/access_token",
-        token_method:  :get
+        site: 'https://api.weixin.qq.com',
+        authorize_url: 'https://open.weixin.qq.com/connect/oauth2/authorize#wechat_redirect',
+        token_url: '/sns/oauth2/access_token',
+        token_method: :get
       }
-
-      option :authorize_params, {scope: "snsapi_userinfo"}
-
-      option :token_params, {parse: :json}
+      option :authorize_params, { scope: 'snsapi_userinfo' }
+      option :token_params, { parse: :json }
 
       uid do
         raw_info['openid']
@@ -30,9 +27,8 @@ module OmniAuth
           headimgurl: raw_info['headimgurl']
         }
       end
-
       extra do
-        {raw_info: raw_info}
+        { raw_info: raw_info }
       end
 
       def request_phase
@@ -55,6 +51,7 @@ module OmniAuth
             @raw_info
           end
         end
+        @raw_info
       end
 
       protected
