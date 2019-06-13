@@ -21,39 +21,39 @@ module OmniAuth
 
       info do
         {
-          nickname:   raw_info['nickname'],
-          sex:        raw_info['sex'],
-          province:   raw_info['province'],
-          city:       raw_info['city'],
-          country:    raw_info['country'],
+          nickname: raw_info['nickname'],
+          sex: raw_info['sex'],
+          province: raw_info['province'],
+          city: raw_info['city'],
+          country: raw_info['country'],
           headimgurl: raw_info['headimgurl']
         }
       end
+      
       extra do
         { raw_info: raw_info }
       end
 
       def request_phase
         params = client.auth_code.authorize_params.merge(redirect_uri: callback_url).merge(authorize_params)
-        params["appid"] = params.delete("client_id")
+        params['appid'] = params.delete('client_id')
         redirect client.authorize_url(params)
       end
 
       def raw_info
-        @uid ||= access_token["openid"]
+        @uid ||= access_token['openid']
         @raw_info ||= begin
           access_token.options[:mode] = :query
           case access_token['scope']
           when 'snsapi_login', 'snsapi_userinfo'
-            response = access_token.get("/sns/userinfo", :params => {"openid" => @uid}, parse: :text)
+            response = access_token.get('/sns/userinfo', params: { openid: @uid }, parse: :text)
             @raw_info = JSON.parse(response.body.gsub(/[\u0000-\u001f]+/, ''))
           else
-            @raw_info = {"openid" => @uid }
-            @raw_info.merge!("unionid" => access_token["unionid"]) if access_token["unionid"]
+            @raw_info = {'openid' => @uid }
+            @raw_info.merge!('unionid' => access_token['unionid']) if access_token['unionid']
             @raw_info
           end
         end
-        @raw_info
       end
 
       protected
