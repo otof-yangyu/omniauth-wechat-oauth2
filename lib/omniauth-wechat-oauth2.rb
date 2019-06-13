@@ -1,3 +1,5 @@
-require "omniauth/strategies/wechat"
-require "omniauth/strategies/wechat_qiye"
-require "omniauth/strategies/wechat_qr"
+# frozen_string_literal: true
+
+require_relative 'strategies/wechat'
+require_relative 'strategies/wechat_qiye'
+require_relative 'strategies/wechat_qr'

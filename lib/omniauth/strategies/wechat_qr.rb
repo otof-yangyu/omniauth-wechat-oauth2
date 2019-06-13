@@ -1,4 +1,6 @@
-require "omniauth-oauth2"
+# frozen_string_literal: true
+
+require 'omniauth-oauth2'
 
 module OmniAuth
   module Strategies
@@ -6,13 +8,13 @@ module OmniAuth
       option :name, 'wechat_qr'
 
       option :client_options, {
-        site:          "https://api.weixin.qq.com",
-        authorize_url: "https://open.weixin.qq.com/connect/qrconnect#wechat_redirect",
-        token_url:     "/sns/oauth2/access_token",
-        token_method:  :get
+        site: 'https://api.weixin.qq.com',
+        authorize_url: 'https://open.weixin.qq.com/connect/qrconnect#wechat_redirect',
+        token_url: '/sns/oauth2/access_token',
+        token_method: :get
       }
 
-      option :authorize_params, {scope: "snsapi_login"}
+      option :authorize_params, { scope: 'snsapi_login' }
 
     end
   end
