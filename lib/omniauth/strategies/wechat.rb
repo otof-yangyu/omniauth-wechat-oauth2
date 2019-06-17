@@ -42,28 +42,30 @@ module OmniAuth
 
       def raw_info
         @uid ||= access_token['openid']
-        @raw_info ||= begin
-          access_token.options[:mode] = :query
-          case access_token['scope']
-          when 'snsapi_login', 'snsapi_userinfo'
-            response = access_token.get('/sns/userinfo', params: { openid: @uid }, parse: :text)
-            @raw_info = JSON.parse(response.body.gsub(/[\u0000-\u001f]+/, ''))
-          else
-            @raw_info = {'openid' => @uid }
-            @raw_info.merge!('unionid' => access_token['unionid']) if access_token['unionid']
-            @raw_info
-          end
+        return @raw_info if defined?(@raw_info)
+        
+        access_token.options[:mode] = :query
+        case access_token['scope']
+        when 'snsapi_login', 'snsapi_userinfo'
+          response = access_token.get('/sns/userinfo', params: { openid: @uid }, parse: :text)
+          @raw_info = JSON.parse(response.body.gsub(/[\u0000-\u001f]+/, ''))
+        else
+          @raw_info = { 'openid' => @uid }
+          @raw_info.merge!('unionid' => access_token['unionid']) if access_token['unionid']
+          @raw_info
         end
+        @raw_info.merge! 'app_id' => client.id
       end
 
       protected
       def build_access_token
         params = {
-          'appid' => client.id,
-          'secret' => client.secret,
-          'code' => request.params['code'],
-          'grant_type' => 'authorization_code'
-          }.merge(token_params.to_hash(symbolize_keys: true))
+          appid: client.id,
+          secret: client.secret,
+          code: request.params['code'],
+          grant_type: 'authorization_code'
+        }.merge(token_params.to_hash(symbolize_keys: true))
+        
         client.get_token(params, deep_symbolize(Hash(options.auth_token_params)))
       end
 
